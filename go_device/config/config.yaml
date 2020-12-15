@@ -1,0 +1,20 @@
+GCP:
+    PROJECT_ID: "iot-final-project-298521"
+    BUCKET_NAME: ""
+
+    PUB_SUB:
+      TOPIC_ID: sisemograph_readings
+      TOPIC_NAME: projects/iot-final-project-298521/topics/seismograph_readings
+
+    IOT_CORE:
+      GCP_CLOUD_IOT_CORE_REGION: us-central1 #us-central1, europe-west1, asia-east1
+      REGISTRY_ID: seismograph_devices
+
+      DEVICE:
+        NAME: seismograph_1
+        PATH: seismograph_devices/devices/seismograph_1
+        LOCATION: "37.772239, -122.422889"
+
+SIMULATION:
+    INTERVAL: 1 #seconds
+    JOB_SIZE: 10
