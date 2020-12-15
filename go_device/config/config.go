@@ -14,20 +14,13 @@ import (
 type Values struct {
 	GCP        GCP        `yaml:"GCP"`
 	Simulation Simulation `yaml:"SIMULATION"`
+	Device     Device     `yaml:"DEVICE"`
 }
 
 // GCP contains configuration values related to the gcp project
 type GCP struct {
-	IOTCore   IOTCore `yaml:"IOT_CORE"`
-	PubSub    PubSub  `yaml:"PUB_SUB"`
-	ProjectID string  `yaml:"PROJECT_ID"`
-}
-
-// IOTCore contains configuration values related to gcp's iot core.
-type IOTCore struct {
-	Region     string `yaml:"GCP_CLOUD_IOT_CORE_REGION"`
-	RegistryID string `yaml:"REGISTRY_ID"`
-	Device     Device `yaml:"DEVICE"`
+	PubSub    PubSub `yaml:"PUB_SUB"`
+	ProjectID string `yaml:"PROJECT_ID"`
 }
 
 // Device contains configuration values for a device gcp's iot core
