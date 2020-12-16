@@ -4,6 +4,7 @@ import (
 	"conormacpherson/iot/sisemographs/config"
 	"conormacpherson/iot/sisemographs/messages"
 	"context"
+	"encoding/json"
 	"fmt"
 	"log"
 	"math/rand"
@@ -14,8 +15,8 @@ import (
 )
 
 var (
-	minDelta                       int           = -1
-	maxDelta                       int           = 1
+	min                            float64       = -1.0
+	max                            float64       = 1.0
 	qos                            int           = 1
 	cloudIOTCoreMQTTBridgeHostName string        = "mqtt.googleapis.com"
 	cloudIOTCoreMQTTBridgePort     string        = "8883"
@@ -24,6 +25,8 @@ var (
 
 func main() {
 	ctx := context.Background()
+
+	fmt.Printf("%+v", configs)
 
 	client, err := pubsub.NewClient(ctx, configs.GCP.ProjectID)
 	if err != nil {
@@ -45,12 +48,20 @@ func main() {
 }
 
 func publish(ctx context.Context, client *pubsub.Client) *pubsub.PublishResult {
-	seed := rand.NewSource(time.Now().UnixNano())
-	variance := minDelta + (rand.New(seed).Int() * maxDelta)
-	reading := messages.SeismographReading{ID: configs.GCP.IOTCore.Device.Name, Location: configs.GCP.IOTCore.Device.Location, Scale: variance, Time: time.Now().Format("2006-01-02T15:04:05")}
-	fmt.Println(reading)
+	rand.Seed(time.Now().UnixNano())
+	variance := rand.Float64()*(max-min) + min
+
+	reading := messages.SeismographReading{Name: configs.Device.Name, Location: configs.Device.Location, Scale: variance, Time: time.Now().Format("2006-01-02T15:04:05")}
 	topic := client.Topic("seismograph_readings")
+	json, err := json.Marshal(reading)
+	if err != nil {
+		fmt.Fprintf(os.Stdout, "could not marshal reading to json: %v\n", err)
+		return nil
+	}
+
+	attributes := map[string]string{"device_name": configs.Device.Name}
 	return topic.Publish(ctx, &pubsub.Message{
-		Data: []byte(fmt.Sprintf("%v", reading)),
+		Data:       json,
+		Attributes: attributes,
 	})
 }

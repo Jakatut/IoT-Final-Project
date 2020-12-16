@@ -15,6 +15,7 @@ type Values struct {
 	GCP        GCP        `yaml:"GCP"`
 	Simulation Simulation `yaml:"SIMULATION"`
 	Device     Device     `yaml:"DEVICE"`
+	Server     Server     `yaml:"SERVER"`
 }
 
 // GCP contains configuration values related to the gcp project
@@ -32,8 +33,9 @@ type Device struct {
 
 // PubSub contains configuration values related to pub sub on gcp.
 type PubSub struct {
-	TopicID   string `yaml:"TOPIC_ID"`
-	TopicName string `yaml:"TOPIC_NAME"`
+	TopicID      string `yaml:"TOPIC_ID"`
+	TopicName    string `yaml:"TOPIC_NAME"`
+	Subscription string `yaml:"SUBSCRIPTION"`
 }
 
 // Simulation contians configuration values related to running the simulation. i.e. how many "jobs"/"messages"
@@ -43,11 +45,16 @@ type Simulation struct {
 	JobSize  int `yaml:"JOB_SIZE"`
 }
 
+// Server contains configuration values related to running the web server.
+type Server struct {
+	Port int `yaml:"PORT"`
+}
+
 // GetConfig reads and returns environment variables containing config values.
 func GetConfig() Values {
 	config := Values{}
 
-	configPath := os.Getenv("CONFIG_PATH")
+	configPath := os.Getenv("PUB_SUB_SERVICE_LOGGING_PATH")
 	if configPath == "" {
 		var err error
 		configPath, err = filepath.Abs("config/config.yaml")

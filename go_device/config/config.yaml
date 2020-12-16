@@ -1,16 +1,20 @@
 GCP:
-    PROJECT_ID: "iot-final-project-298521"
-    BUCKET_NAME: ""
+  PROJECT_ID: "iot-final-project-298521"
+  BUCKET_NAME: ""
 
-    PUB_SUB:
-      TOPIC_ID: sisemograph_readings
-      TOPIC_NAME: projects/iot-final-project-298521/topics/seismograph_readings
+  PUB_SUB:
+    TOPIC_ID: sisemograph_readings
+    TOPIC_NAME: projects/iot-final-project-298521/topics/seismograph_readings
+    SUBSCRIPTION: readings
 
-    DEVICE:
-      NAME: seismograph_1
-      PATH: seismograph_devices/devices/seismograph_1
-      LOCATION: "37.772239, -122.422889"
+DEVICE:
+  NAME: seismograph_1
+  PATH: seismograph_devices/devices/seismograph_1
+  LOCATION: "37.772239, -122.422889"
 
 SIMULATION:
-    INTERVAL: 1 #seconds
-    JOB_SIZE: 10
+  INTERVAL: 1 #seconds
+  JOB_SIZE: 10000
+
+SERVER:
+  PORT: 8000

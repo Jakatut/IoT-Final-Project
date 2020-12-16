@@ -29,7 +29,7 @@ set VARIABLE_NAME=[VALUE]
 
 | Name  | Description | Default |
 |---|---|---|
-| CONFIG_PATH  |   the path to your config.yaml | [project_path]/config/config.yaml |
+| GO_DEVICE_CONFIG_PATH  |   the path to your config.yaml | [project_path]/config/config.yaml |
 | GOOGLE_APPLICATION_CREDENTIALS | The path to a service account key-file used for local authentication  |  |
 
 
